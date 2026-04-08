@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Zetech University | Data Structures Q&A Revision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --zetech-blue: #0033a0;
+            --zetech-gold: #ffd700;
+            --zetech-red: #e31837;
+            --primary-bg: #f5f7fc;
+            --secondary-bg: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-gray: #4a5568;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --accent: #0033a0;
+        }
+
+        [data-theme="dark"] {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --text-dark: #f1f5f9;
+            --text-gray: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            background: var(--zetech-blue);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .logo p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .uni-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .uni-badge span {
+            background: var(--zetech-gold);
+            color: var(--zetech-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .theme-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 7rem 2rem 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--zetech-blue) 0%, #002a80 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            opacity: 0.9;
+        }
+
+        .course-code {
+            display: inline-block;
+            background: var(--zetech-gold);
+            color: var(--zetech-blue);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Topics Navigation */
+        .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            background: var(--secondary-bg);
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .topic-nav-btn {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .topic-nav-btn:hover, .topic-nav-btn.active {
+            background: var(--zetech-blue);
+            color: white;
+            border-color: var(--zetech-blue);
+        }
+
+        /* Q&A Grid */
+        .qa-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .qa-card {
+            background: var(--secondary-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .qa-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .qa-question {
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 51, 160, 0.05);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .qa-question h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--zetech-blue);
+        }
+
+        .qa-question i {
+            transition: transform 0.3s ease;
+            color: var(--zetech-blue);
+        }
+
+        .qa-card.open .qa-question i {
+            transform: rotate(180deg);
+        }
+
+        .qa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 1.5rem;
+        }
+
+        .qa-card.open .qa-answer {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+
+        .qa-answer p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: var(--primary-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--zetech-blue);
+        }
+
+        .example-box {
+            background: rgba(0, 51, 160, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .example-box strong {
+            color: var(--zetech-blue);
+        }
+
+        /* Visualizer */
+        .visualizer {
+            background: var(--primary-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .array-cells {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cell.highlight {
+            border-color: var(--zetech-blue);
+            background: rgba(0, 51, 160, 0.1);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            background: var(--zetech-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--zetech-blue);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 6rem 1rem 1rem;
+            }
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+            .topic-nav {
+                gap: 0.5rem;
+            }
+            .topic-nav-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>ZETECH UNIVERSITY</h1>
+                <p>School of Science & Technology</p>
+            </div>
+            <div class="uni-badge">
+                <span>DATA STRUCTURES</span>
+                <span>CSC 2105</span>
+                <button class="theme-btn" id="themeToggle">🌙 Dark Mode</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>📚 Data Structures & Algorithms</h2>
+            <p>Interactive Q&A Revision Platform | Complete Exam Preparation</p>
+            <div class="course-code">Bachelor of Science in Software Engineering</div>
+        </div>
+
+        <!-- Topic Navigation -->
+        <div class="topic-nav" id="topicNav">
+            <button class="topic-nav-btn active" data-topic="all">All Topics</button>
+            <button class="topic-nav-btn" data-topic="intro">Week 1: Introduction</button>
+            <button class="topic-nav-btn" data-topic="array">Week 2: Arrays</button>
+            <button class="topic-nav-btn" data-topic="sorting">Week 3-4: Sorting</button>
+            <button class="topic-nav-btn" data-topic="searching">Week 4: Searching</button>
+            <button class="topic-nav-btn" data-topic="stack">Week 5: Stack</button>
+            <button class="topic-nav-btn" data-topic="linkedlist">Week 6-7: Linked List</button>
+            <button class="topic-nav-btn" data-topic="queue">Week 8-9: Queue</button>
+            <button class="topic-nav-btn" data-topic="graph">Week 10-11: Graphs</button>
+            <button class="topic-nav-btn" data-topic="trends">Week 12: Trends</button>
+        </div>
+
+        <!-- Q&A Grid -->
+        <div class="qa-grid" id="qaGrid"></div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 Zetech University | Data Structures & Algorithms Revision Material</p>
+        <p style="font-size: 0.7rem; margin-top: 0.5rem;">Prepared for Bachelor of Science in Software Engineering</p>
+    </footer>
+
+    <script>
+        // Q&A Data
+        const qaData = [
+            // Week 1: Introduction
+            {
+                topic: "intro",
+                week: "Week 1",
+                question: "What is a Data Structure? Explain with examples.",
+                answer: "A data structure is a specialized way of organizing, storing, and managing data in a computer for efficient access and modification.",
+                code: `// Examples of Data Structures:
+// 1. Array - stores elements in contiguous memory
+let scores = [85, 90, 78, 92];
+
+// 2. Stack - LIFO structure
+let stack = [];
+stack.push(10); // Add to top
+stack.pop();    // Remove from top
+
+// 3. Queue - FIFO structure
+let queue = [];
+queue.push(10); // Add to rear
+queue.shift();  // Remove from front`,
+                more: "Data structures are classified into LINEAR (Array, Stack, Queue, Linked List) and NON-LINEAR (Tree, Graph)."
+            },
+            {
+                topic: "intro",
+                week: "Week 1",
+                question: "Differentiate between Linear and Non-Linear Data Structures.",
+                answer: "LINEAR: Elements arranged in sequence, single level, easy to implement. NON-LINEAR: Elements not in sequence, multiple levels, more complex.",
+                code: `// Linear: Elements in a line
+[10] → [20] → [30] → [40]
+
+// Non-Linear: Hierarchical structure
+       10
+     /   \\
+    20    30
+   /  \\
+  40  50`,
+                more: "Examples of Linear: Array, Stack, Queue, Linked List. Examples of Non-Linear: Tree, Graph."
+            },
+            // Week 2: Arrays
+            {
+                topic: "array",
+                week: "Week 2",
+                question: "What is an Array? State its advantages and disadvantages.",
+                answer: "An array is a collection of homogeneous elements stored at contiguous memory locations.",
+                code: `let arr = [10, 20, 30, 40, 50];
+
+// Access: O(1)
+console.log(arr[2]); // 30
+
+// Insert at position: O(n)
+arr.splice(2, 0, 25); // [10,20,25,30,40,50]
+
+// Delete at position: O(n)
+arr.splice(2, 1); // [10,20,30,40,50]`,
+                more: "ADVANTAGES: Fast access O(1), memory efficient, cache friendly. DISADVANTAGES: Fixed size, costly insertion/deletion O(n)."
+            },
+            {
+                topic: "array",
+                week: "Week 2",
+                question: "Explain Bubble Sort with an example.",
+                answer: "Bubble Sort repeatedly steps through the list, compares adjacent elements and swaps them if they are in wrong order.",
+                code: `function bubbleSort(arr) {
+    let n = arr.length;
+    for(let i = 0; i < n-1; i++) {
+        for(let j = 0; j < n-i-1; j++) {
+            if(arr[j] > arr[j+1]) {
+                // Swap
+                [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+            }
+        }
+    }
+    return arr;
+}
+
+let arr = [64, 34, 25, 12, 22];
+bubbleSort(arr); // [12, 22, 25, 34, 64]`,
+                more: "Time Complexity: O(n²) worst case, O(n) best case (already sorted). Space Complexity: O(1)."
+            },
+            // Week 3-4: Sorting
+            {
+                topic: "sorting",
+                week: "Week 3-4",
+                question: "Explain Selection Sort algorithm.",
+                answer: "Selection Sort divides array into sorted and unsorted regions. It repeatedly selects the minimum element from unsorted region and places it at the beginning.",
+                code: `function selectionSort(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        let minIdx = i;
+        for(let j = i+1; j < arr.length; j++) {
+            if(arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        if(minIdx !== i) {
+            [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+        }
+    }
+    return arr;
+}
+
+// Example: [64, 25, 12, 22, 11] → [11, 12, 22, 25, 64]`,
+                more: "Time Complexity: O(n²) for all cases. Not stable but works well for small arrays."
+            },
+            {
+                topic: "sorting",
+                week: "Week 3-4",
+                question: "Compare Merge Sort and Quick Sort.",
+                answer: "Merge Sort divides array into halves, sorts recursively, then merges. Quick Sort picks a pivot and partitions array around it.",
+                code: `// Merge Sort - O(n log n) always
+function mergeSort(arr) {
+    if(arr.length <= 1) return arr;
+    let mid = Math.floor(arr.length/2);
+    let left = mergeSort(arr.slice(0,mid));
+    let right = mergeSort(arr.slice(mid));
+    return merge(left, right);
+}
+
+// Quick Sort - O(n log n) average, O(n²) worst
+function quickSort(arr) {
+    if(arr.length <= 1) return arr;
+    let pivot = arr[0];
+    let left = [], right = [];
+    for(let i = 1; i < arr.length; i++) {
+        arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
+    }
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}`,
+                more: "Merge Sort is stable, better for linked lists. Quick Sort is faster in practice, better for arrays."
+            },
+            // Week 4: Searching
+            {
+                topic: "searching",
+                week: "Week 4",
+                question: "Explain Linear Search and Binary Search with examples.",
+                answer: "Linear Search checks each element sequentially. Binary Search divides sorted array in half repeatedly.",
+                code: `// Linear Search - O(n)
+function linearSearch(arr, target) {
+    for(let i = 0; i < arr.length; i++) {
+        if(arr[i] === target) return i;
+    }
+    return -1;
+}
+
+// Binary Search - O(log n) - requires sorted array
+function binarySearch(arr, target) {
+    let left = 0, right = arr.length-1;
+    while(left <= right) {
+        let mid = Math.floor((left+right)/2);
+        if(arr[mid] === target) return mid;
+        if(arr[mid] < target) left = mid+1;
+        else right = mid-1;
+    }
+    return -1;
+}`,
+                more: "Linear Search works on unsorted arrays, O(n). Binary Search requires sorted array, O(log n) - much faster."
+            },
+            // Week 5: Stack
+            {
+                topic: "stack",
+                week: "Week 5",
+                question: "What is a Stack? Explain Push() and Pop() operations.",
+                answer: "A Stack is a LIFO (Last In First Out) data structure. Push adds element to top, Pop removes from top.",
+                code: `class Stack {
+    constructor() {
+        this.items = [];
+    }
+    
+    push(element) {
+        this.items.push(element);
+        console.log(\`\${element} pushed to stack\`);
+    }
+    
+    pop() {
+        if(this.isEmpty()) return "Underflow";
+        return this.items.pop();
+    }
+    
+    peek() {
+        return this.items[this.items.length-1];
+    }
+    
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+
+let stack = new Stack();
+stack.push(10);  // Stack: [10]
+stack.push(20);  // Stack: [10, 20]
+stack.pop();     // Returns 20, Stack: [10]`,
+                more: "Applications: Function calls, Undo/Redo, Expression evaluation, Decimal to Binary conversion."
+            },
+            {
+                topic: "stack",
+                week: "Week 5",
+                question: "How to convert Decimal to Binary using Stack?",
+                answer: "Repeatedly divide decimal number by 2, push remainders to stack, then pop to get binary.",
+                code: `function decimalToBinary(num) {
+    let stack = [];
+    
+    while(num > 0) {
+        stack.push(num % 2);  // Push remainder
+        num = Math.floor(num / 2);
+    }
+    
+    let binary = "";
+    while(stack.length > 0) {
+        binary += stack.pop();  // Pop to build binary
+    }
+    return binary || "0";
+}
+
+console.log(decimalToBinary(13));  // "1101"
+console.log(decimalToBinary(25));  // "11001"`,
+                more: "This demonstrates the LIFO property - remainders are collected in reverse order, and popping gives correct binary."
+            },
+            // Week 6-7: Linked List
+            {
+                topic: "linkedlist",
+                week: "Week 6-7",
+                question: "What is a Linked List? Explain its types.",
+                answer: "A Linked List is a linear data structure where elements (nodes) contain data and reference to next node.",
+                code: `class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }
+    
+    // Insert at beginning
+    insertAtBeginning(data) {
+        let newNode = new Node(data);
+        newNode.next = this.head;
+        this.head = newNode;
+    }
+    
+    // Display list
+    display() {
+        let current = this.head;
+        let result = [];
+        while(current) {
+            result.push(current.data);
+            current = current.next;
+        }
+        return result.join(' → ');
+    }
+}
+
+// Types: Singly (one way), Doubly (both ways), Circular (last points to first)`,
+                more: "Advantages: Dynamic size, easy insertion/deletion. Disadvantages: No random access, extra memory for pointers."
+            },
+            // Week 8-9: Queue
+            {
+                topic: "queue",
+                week: "Week 8-9",
+                question: "What is a Queue? Explain Enqueue and Dequeue operations.",
+                answer: "A Queue is a FIFO (First In First Out) data structure. Enqueue adds to rear, Dequeue removes from front.",
+                code: `class Queue {
+    constructor() {
+        this.items = [];
+    }
+    
+    enqueue(element) {
+        this.items.push(element);
+        console.log(\`\${element} added to queue\`);
+    }
+    
+    dequeue() {
+        if(this.isEmpty()) return "Underflow";
+        return this.items.shift();
+    }
+    
+    front() {
+        if(this.isEmpty()) return "Queue empty";
+        return this.items[0];
+    }
+    
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+
+let queue = new Queue();
+queue.enqueue(10);  // Queue: [10]
+queue.enqueue(20);  // Queue: [10, 20]
+queue.dequeue();    // Returns 10, Queue: [20]`,
+                more: "Applications: Print spooling, CPU scheduling, Breadth-First Search, Call center systems."
+            },
+            {
+                topic: "queue",
+                week: "Week 8-9",
+                question: "Explain different types of Queues.",
+                answer: "Simple Queue, Circular Queue, Priority Queue, Deque (Double Ended Queue).",
+                code: `// Circular Queue (reuses empty spaces)
+class CircularQueue {
+    constructor(capacity) {
+        this.items = new Array(capacity);
+        this.capacity = capacity;
+        this.front = -1;
+        this.rear = -1;
+    }
+    
+    enqueue(element) {
+        if(this.isFull()) return "Queue Full";
+        if(this.front === -1) this.front = 0;
+        this.rear = (this.rear + 1) % this.capacity;
+        this.items[this.rear] = element;
+    }
+}
+
+// Priority Queue (elements processed by priority)
+class PriorityQueue {
+    constructor() {
+        this.items = [];
+    }
+    
+    enqueue(element, priority) {
+        this.items.push({element, priority});
+        this.items.sort((a,b) => a.priority - b.priority);
+    }
+}`,
+                more: "Circular Queue saves memory, Priority Queue used in Dijkstra's algorithm, Deque used in palindrome checking."
+            },
+            // Week 10-11: Graphs
+            {
+                topic: "graph",
+                week: "Week 10-11",
+                question: "What is a Graph? Explain BFS and DFS traversals.",
+                answer: "A Graph is a non-linear data structure with vertices (nodes) and edges (connections). BFS uses queue, DFS uses stack.",
+                code: `// Graph representation using Adjacency List
+const graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+};
+
+// BFS (Breadth-First Search) - uses Queue
+function bfs(graph, start) {
+    let visited = new Set();
+    let queue = [start];
+    visited.add(start);
+    
+    while(queue.length) {
+        let node = queue.shift();
+        console.log(node);
+        for(let neighbor of graph[node]) {
+            if(!visited.has(neighbor)) {
+                visited.add(neighbor);
+                queue.push(neighbor);
+            }
+        }
+    }
+}
+
+// DFS (Depth-First Search) - uses Stack
+function dfs(graph, start) {
+    let visited = new Set();
+    let stack = [start];
+    
+    while(stack.length) {
+        let node = stack.pop();
+        if(!visited.has(node)) {
+            visited.add(node);
+            console.log(node);
+            for(let neighbor of graph[node]) {
+                stack.push(neighbor);
+            }
+        }
+    }
+}`,
+                more: "BFS finds shortest path, used in social networks. DFS used in topological sorting, maze solving."
+            },
+            {
+                topic: "graph",
+                week: "Week 10-11",
+                question: "What are Graph Degrees and applications of Graphs?",
+                answer: "Degree of a vertex = number of edges incident to it. In-degree = incoming edges, Out-degree = outgoing edges.",
+                code: `// Calculate degrees
+function calculateDegrees(graph) {
+    let degrees = {};
+    for(let node in graph) {
+        degrees[node] = graph[node].length;  // Out-degree
+    }
+    return degrees;
+}
+
+// Graph Applications:
+// 1. Social Networks (Facebook friends)
+// 2. GPS Navigation (Shortest path)
+// 3. Web Pages (PageRank algorithm)
+// 4. Network Routing
+// 5. Recommendation Systems`,
+                more: "Applications: Google Maps, Facebook Friend Suggestions, Network Topology, Dependency Resolution."
+            },
+            // Week 12: Trends
+            {
+                topic: "trends",
+                week: "Week 12",
+                question: "What are the emerging trends and challenges in Data Structures?",
+                answer: "Emerging trends include Big Data structures, NoSQL databases, Graph databases, In-memory data structures.",
+                code: `// Modern Data Structure Applications:
+// 1. Big Data - Hadoop, Spark
+// 2. NoSQL - MongoDB (Document), Redis (Key-Value)
+// 3. Graph DB - Neo4j
+// 4. In-Memory - Redis, Memcached
+// 5. Persistent Data Structures
+
+// Example: Redis Key-Value Store
+// SET user:1000 "John Doe"
+// GET user:1000 -> "John Doe"`,
+                more: "Challenges: Memory constraints, Processing speed, Distributed systems complexity, Real-time processing requirements."
+            }
+        ];
+
+        // Render Q&A Grid
+        function renderQA(filterTopic = "all") {
+            const grid = document.getElementById('qaGrid');
+            const filtered = filterTopic === "all" ? qaData : qaData.filter(q => q.topic === filterTopic);
+            
+            grid.innerHTML = filtered.map((qa, index) => `
+                <div class="qa-card" data-topic="${qa.topic}" data-index="${index}">
+                    <div class="qa-question" onclick="toggleCard(this)">
+                        <h3><span style="background: var(--zetech-blue); color: white; padding: 0.2rem 0.5rem; border-radius: 5px; font-size: 0.7rem; margin-right: 0.8rem;">${qa.week}</span> ${qa.question}</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        <p>${qa.answer}</p>
+                        ${qa.code ? `<div class="code-block"><pre>${escapeHtml(qa.code)}</pre></div>` : ''}
+                        ${qa.more ? `<div class="example-box"><strong>📌 Additional Notes:</strong><br>${qa.more}</div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>]/g, function(m) {
+                if(m === '&') return '&amp;';
+                if(m === '<') return '&lt;';
+                if(m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function toggleCard(element) {
+            const card = element.closest('.qa-card');
+            card.classList.toggle('open');
+        }
+
+        // Topic Navigation
+        document.querySelectorAll('.topic-nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.topic-nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const topic = btn.getAttribute('data-topic');
+                renderQA(topic);
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const savedTheme = localStorage.getItem('zetech-theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('zetech-theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Initial render
+        renderQA("all");
+    </script>
+</body>
+</html>
